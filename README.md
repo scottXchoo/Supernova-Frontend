@@ -1,1 +1,1 @@
-# supernova-frontend
+# Supernova Front-End
