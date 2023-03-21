@@ -1,4 +1,4 @@
-# Supernova Front-End
+# ⭐️ Supernova Front-End
 <img width="750" alt="supernova" src="https://user-images.githubusercontent.com/107841492/225522735-ffce7a88-4296-4202-9582-7ca3de5625ec.png">
 
 ## 🔭 Overview
