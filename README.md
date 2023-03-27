@@ -8,10 +8,23 @@
 - Meta governance platform on Cosmos
 
 ## 💻 Tech Stack
-- Core : ReactJS, NextJS, TypeScript
-- State Management : RecoilJS, React-Query
-- Styling : Tailwind CSS, Shuffle
-- Package Manager : Yarn Berry
+### ⭐️ Core
+- React.js
+- Next.js
+- TypeScript
+
+### 📚 State Management
+- Recoil
+
+### 🚀 Data Fetching
+- React Query
+
+### 🎨 Styling
+- Tailwind CSS
+- Shuffle
+
+### 📦 Package Manager
+- Yarn Berry
 
 ## 🏅 Award
 **2022 HACKATOM Seoul**
