@@ -6,6 +6,8 @@
 
 Supernova는 Liquid staking, Staked swap only for staked assets 그리고 Meta governance platform on Cosmos가 특징인 DeFI(탈중앙화 금융 서비스)입니다.
 
+Senior FE Developer 1명 / Junior FE Developer 2명(ME) / Web Designer 1명 / Blockchain Core Developer 2명 / Contract Developer 1명 / BE Developer 1명 / PM 2명 / PO 1명이 팀이 되어 프로젝트를 진행했습니다.
+
 ### 프로젝트 기간
 
 : 22.05 - 23.03 (11M)
