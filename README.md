@@ -1,215 +1,66 @@
-![landing_thumbnail](https://github.com/scottXchoo/Supernova_Front-end/assets/107841492/f092ae74-e52d-4636-af68-c253d5ab634f)
+<img width="897" alt="image" src="https://github.com/scottXchoo/Supernova-Frontend/assets/107841492/c6e2b5bf-600d-46fe-860a-954809b3a067">
 
-[#GitHub](https://github.com/scottXchoo/Supernova_Front-end/tree/main) [#YouTube](https://youtu.be/VG-m5jsV0Ck?si=gB6YLwXGC7rvIz1Q) 
+## ⭐️ 프로젝트 소개
 
-## 프로젝트 소개
+**Supernova**는 멀티체인 시대의 대표적인 생태계이자 블록체인의 인터넷을 지향하는 [Cosmos 블록체인](https://www.chooblog.xyz/14a2a404-291c-4118-a146-82aa9cd9fc99#c9d3482dd5244bafb32b5137f4f76867)에서 [Liquid Staking(유동성 스테이킹)](https://www.chooblog.xyz/14a2a404-291c-4118-a146-82aa9cd9fc99#e04c8d45d6364cff85a50ff623309b43)을 제공하며 자산 교환(swap), 유동성 공급(liquidity) 등 다양한 금융 서비스를 하나의 플랫폼에서 제공하는 [DeFi(탈중앙화 금융 서비스)](https://www.chooblog.xyz/14a2a404-291c-4118-a146-82aa9cd9fc99#f3ec8a1deb494d3c8097615fcf88b248)입니다.
 
-Supernova 프로젝트는 자산 예치(stake), 자산 교환(swap), 유동성 공급(liquidity) 등 다양한 기능을 하나의 플랫폼에서 제공하는 Cosmos 블록체인 기반의 탈중앙화 금융 서비스(DeFi)입니다.
+**FE Developer** 본인 포함 3명, **BE Developer** 1명, **Blockchain Core Developer** 2명, **Smart Contract Developer** 1명, **Web Designer** 1명, **PM** 2명 그리고 **PO** 1명으로 구성된 팀으로 프로젝트를 진행했습니다.
 
-Senior FE Developer 1명 / Junior FE Developer 2명(ME) / Web Designer 1명 / Blockchain Core Developer 2명 / Contract Developer 1명 / BE Developer 1명 / PM 2명 / PO 1명이 팀이 되어 프로젝트를 진행했습니다.
+이 프로젝트에서 저는 주로 **커스텀 훅 설계 및 개발과 프론트엔드 사용자 인터페이스(UI) 구현**을 맡았습니다.
 
-이 프로젝트에서 제가 맡은 주요 역할은 FE 페이지 및 React 훅 개발이었습니다.
+<br />
 
-### 프로젝트 기간
+## 🚀 주요 기능
+### **[1] Stake/Unstake 기능**
 
-: 22.05 - 23.03 (11M)
+Supernova 블록체인에 ATOM을 스테이킹/언스테이킹을 할 수 있습니다.
 
-### 사용한 기술 스택
+ATOM을 스테이킹함으로써 높은 이자와 ATOM의 쉐도우 토큰인 snATOM을 받으세요.
 
-**코어 기술** : Next.js / React / TypeScript
+### **[2] Swap 기능**
 
-**상태관리** : Recoil
+스왑 기능을 통해 snATOM을 ATOM으로(반대로도 가능) 스왑할 수 있습니다.
 
-**스타일링** : Tailwind CSS
+이를 통해 다른 DeFi에 가지 않더라도 스왑이 Supernova 내에서 가능하게 됩니다.
 
-## 구체적인 업무
+### **[3] Liquidity Add/Remove 기능**
 
-### [1] useInput 커스텀 훅 개발
+Supernova에는 ATOM-snATOM 유동성 풀이 있습니다.
 
-프로젝트의 다양한 페이지마다 입력값 처리 로직이 제각각 다르게 작성되어 개발 효율성이 저하되었습니다. 이 문제를 해결하고자 여러 페이지에서 일관되게 사용할 수 있는 useInput 커스텀 훅을 개발했습니다.
+ATOM-snATOM을 Supernova 유동성 풀에 넣으면, 높은 이자를 받을 수 있습니다.
 
-<img width="300" alt="pr-supernova-1" src="https://github.com/scottXchoo/Supernova_Front-end/assets/107841492/00becb9d-83f1-49cd-b312-ef2244cbb0ba">
+<br />
 
-```typescript
-interface InputProps {
-  negativeExponent: number;
-  max: string;
-  min?: string;
-  placeholder?: string;
-}
+## 📊 아키텍처
+![architecture](https://github.com/scottXchoo/Supernova-Frontend/assets/107841492/f9fb50f2-93f7-4b59-a2f9-45aebefa7bdc)
 
-const useInput = ({
-  negativeExponent,
-  max: _max,
-  min: _min = '0',
-  placeholder = '0',
-}: InputProps) => {
-  const [rawInput, setRawInput] = useState('');
-  const [input, setInput] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+<br />
 
-  const max = useMemo(() => trimTrailingZeros(trimUnderNegativeExponent(_max, negativeExponent)), [
-    _max,
-    negativeExponent,
-  ]);
-  const min = useMemo(() => trimTrailingZeros(trimUnderNegativeExponent(_min, negativeExponent)), [
-    _min,
-    negativeExponent,
-  ]);
-  const half = useMemo(
-    () => trimTrailingZeros(Big(_max).div(2).toFixed(negativeExponent, Big.roundDown)),
-    [_max, negativeExponent]
-  );
+## 🛠️ 기술 스택
 
-  const isMax = useMemo(() => {
-    return Big(max).eq(input || placeholder);
-  }, [max, input, placeholder]);
-  const isMin = useMemo(() => {
-    return Big(min).eq(input || placeholder);
-  }, [min, input, placeholder]);
-  const isHalf = useMemo(() => {
-    return Big(half).eq(input || placeholder);
-  }, [half, input, placeholder]);
-  const isOverMax = useMemo(() => {
-    return Big(input || placeholder).gt(max);
-  }, [input, max, placeholder]);
+**Frontend :** TypeScript, React, Next.js, React Query, Recoil + Keplr Wallet
 
-  const toggleMax = useCallback(() => {
-    if (isMax) {
-      setInput(rawInput);
-    } else {
-      setInput(max);
-    }
-  }, [isMax, max, rawInput]);
-  const toggleMin = useCallback(() => {
-    if (isMin) {
-      setInput(rawInput);
-    } else {
-      setInput(min);
-    }
-  }, [isMin, min, rawInput]);
-  const toggleHalf = useCallback(() => {
-    if (isHalf) {
-      setInput(rawInput);
-    } else {
-      setInput(half);
-    }
-  }, [isHalf, half, rawInput]);
+**Blockchain Core :** Go, Cosmos SDK
 
-  useEffect(() => {
-    setInput(rawInput);
-  }, [rawInput]);
+**Smart Contract :** CosmWasm, CosmJS
 
-  useEffect(() => {
-    if (Big(input || placeholder).gt(max)) {
-      setErrorMessage('Insufficient Balance');
-    }
+<br />
 
-    if (Big(input || placeholder).lt(min)) {
-      setErrorMessage(`Input can't be less than ${min}`);
-    }
-  }, [input, max, min, placeholder]);
+## 🔥 기술적 도전
 
-  return {
-    input,
-    setInput: _setInput,
-    resetInput,
-    errorMessage,
-    isMax,
-    isMin,
-    isHalf,
-    isOverMax,
-    toggleMax,
-    toggleMin,
-    toggleHalf,
-  };
-};
-```
-**1. 상태 관리 :** rawInput, input, errorMessage 라는 세 가지 상태를 사용합니다. 이 상태들은 각각 원본 입력 데이터, 처리된 입력 데이터, 오류 메시지를 저장합니다.
+### 커스텀 훅을 구현하자
 
-**2. 값 계산과 검증 :** max, min, half는 각각 사용자 입력의 최댓값, 최솟값 그리고 절반값을 계산하고 isMax, isMin, isHalf는 입력값이 이들과 일치하는지 판단합니다. 그리고 useMemo를 사용하여 성능을 최적화했습니다.
+- [👛 트랜잭션과 쿼리에 필요한 클라이언트 미리 생성하기 (Feat. useChains)](https://www.chooblog.xyz/37443a0a-24c9-4dc0-8f9c-7b25c8e4fd95)
+- [⚡️ 블록체인에 트랜잭션 쏘기 (Feat. useSwap)](https://www.chooblog.xyz/38a27065-784e-4440-acec-1248f4bb9b0a)
 
-**3. 토글 버튼 기능 :** toggleMax, toggleMin, toggleHalf 함수는 의존하는 값들이 변경될 때만 함수를 재생성하는 useCallback을 사용하여 구현했습니다. 이를 통해 사용자가 쉽게 최댓값, 최솟값, 절반값을 입력창에 적을 수 있도록 했습니다.
+### UX를 개선시키자
+- [⏰ Claim 가능한 예상시간을 UI로 보여주기](https://www.chooblog.xyz/d63cfe3d-9927-47ae-801b-0c9e260fe41a)
 
-**4. rawInput과 input 상태로 구별 :** 사용자가 입력 과정에서 실수를 하거나 입력을 재조정하는 경우가 있습니다. 이때, 원본 입력 데이터 상태(`rawInput`)를 따로 보관함으로써 사용자가 쉽게 이전 입력값으로 돌아갈 수 있습니다.
+<br />
 
-### [2] 트랜잭션 로직 개발
+## 🧵 프로젝트 정보
 
-자산(swap) 기능은 블록체인에 트랜잭션을 발생시킴으로써 사용자가 보유한 자산을 다른 자산으로 교환합니다. 이러한 트랜잭션 로직은 자산 교환(swap)뿐만 아니라 자산 예치(stake), 유동성 공급(liquidity) 등 다양한 기능에 적용되므로, 높은 추상화 수준으로 설계하여 재사용성을 높였습니다.
-
-```typescript
-type MsgType = {
-  typeUrl: string;
-  value: object;
-};
-
-export const executeContractTx = async (
-  msg: MsgType,
-  client: SigningCosmWasmClient,
-  address: string,
-) => {
-  return executeTx([msg], _.cloneDeep(client), address, {
-    gas: CONTRACT_GAS_FEE,
-    amount: coins(CONTRACT_GAS_AMOUNT, 'unova'),
-  });
-};
-
-export const useSwap = () => {
-  const wasmClient = useRecoilValue(getWasmClient);
-  const novaAddress = useRecoilValue(getNovaAddress);
-  const slippageInPercent = useRecoilValue(getSlippageInPercent);
-
-  const executeSwap = useCallback(
-    async (
-      assetInfo: AssetWithAmount | undefined,
-      fromDenom: string,
-      toDenom: string,
-      inputAmount: string,
-    ) => {
-      if (assetInfo == null) {
-        return;
-      }
-      const contractAddress = pairAddressByDenoms(
-        denomByDisplayDenom(fromDenom),
-        denomByDisplayDenom(toDenom),
-      );
-
-      const decimal = assetInfo?.assetComponent.decimal || 0;
-      const amount = Big(inputAmount || 0).toFixed(decimal, Big.roundDown);
-      const decimalMulAmount = ParseDecimal(amount, decimal);
-
-      if (!wasmClient || !novaAddress || !contractAddress) {
-        throw new Error('No wasm client, nova address or pair info given');
-      }
-
-      const pairMsgComposers = new contracts.Pair.PairMessageComposer(novaAddress, contractAddress);
-
-      /** compose swap msg */
-      const pairMsg = pairMsgComposers.swap(
-        {
-          maxSpread: slippageInPercent.div(100).toString(),
-          offerAsset: assetInfo.assetInfoWithAmount(decimalMulAmount),
-          to: novaAddress,
-        },
-        [assetInfo.getCoinInfo(decimalMulAmount)],
-      );
-      return executeContractTx(pairMsg, wasmClient, novaAddress);
-    },
-    [novaAddress, slippageInPercent, wasmClient],
-  );
-
-  return {
-    executeSwap,
-  };
-};
-```
-1. 상태 가져오기 : Recoil의 useRecoilValue를 사용해 wasmClient, novaAddress, slippageInPercent 라는 상태값을 가져옵니다.
-
-2. 스왑 실행 로직 : executeSwap 함수는 사용자의 입력값과 선택된 자산 정보를 바탕으로 트랜잭션을 발생시키는 executeContractTx 함수를 실행합니다. 그리고 Big 라이브러리를 사용하여 입력값의 정밀 계산을 보장합니다.
-
-3. 트랜잭션 실행 로직 : pairMsgComposers 객체를 통해 구성된 트랜잭션 메시지를 executeContractTx 함수가 인자로 받고 이를 wasmClient가 블록체인에 트랜잭션을 발생시키는 로직입니다.
-
-## 프로젝트에서 배운 내용
-**1. React 훅 활용 및 구현 역량 :** useCallback과 useMemo를 활용하여 불필요한 리렌더링을 방지하고 성능을 최적화한 경험이 있습니다. 또한, 복잡한 상태 관리 로직을 추상화하여 재사용 가능한 useInput과 같은 커스텀 훅을 설계 및 구현한 경험이 있습니다.
-
-**2. 사용자 경험 중심 개발 :** 저의 개발 철학의 핵심은 [항상 사용자 경험을 최우선에 두는 것]입니다. 사용자가 Supernova 서비스를 사용하면서 겪을 수 있는 다양한 에러 상황을 면밀히 분석하여 이를 바탕으로 구체적이고 명확한 에러 메시지를 보여주도록 설계했습니다. 또한, 사용자의 아주 작은 재정적 손해라도 이를 막기 위해 입력 데이터에 대한 정밀한 계산을 수행하는 Big 라이브러리를 활용했습니다.
+- [GitHub 링크](https://github.com/scottXchoo/Supernova-Frontend)
+- [Demo 영상](https://youtu.be/VG-m5jsV0Ck?si=xUFk1tPOXQUY2G2a)
+- [Supernova 백서](https://medium.com/supernovazone/the-whitepaper-cec97ffa9182)
+- [Supernova 미디엄](https://medium.com/@Supernovazone)
